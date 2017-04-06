@@ -10,9 +10,15 @@ include_directories(${TOP}C/include/
                     ${TOP}vendor/fleece/vendor/libb64
                     ${TOP}vendor/BLIP-Cpp/include/blip_cpp
                     ${TOP}vendor/BLIP-Cpp/src/util
+                    ${TOP}vendor/BLIP-Cpp/src/websocket
                     )
                     
 aux_source_directory(.  REPLICATOR_SRC)
+if(BLIP_NO_FRAMING)
+    list(REMOVE_ITEM REPLICATOR_SRC ./c4Socket.cc)
+else()
+    list(REMOVE_ITEM REPLICATOR_SRC ./c4WebSocket.cc)
+endif()
 
 set(SRC ${REPLICATOR_SRC}
     ${TOP}LiteCore/Support/Logging.cc
